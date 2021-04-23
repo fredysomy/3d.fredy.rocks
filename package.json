@@ -1,5 +1,5 @@
 {
-  "name": "webpack-three-js-template",
+  "name": "A 3D implementation of my Portfolio.",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,9 +15,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/brunosimon/webpack-three-js-template/issues"
+    "url": "https://github.com/fredysomy/3d.fredy.rocks/issues"
   },
-  "homepage": "https://github.com/brunosimon/webpack-three-js-template#readme",
+  "homepage": "https://github.com/fredysomy/3d.fredy.rocks/#readme",
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",

@@ -1,61 +1,53 @@
-import './style/main.css'
-import * as THREE from 'three'
+import * as THREE from "three";
 
-/**
- * Sizes
- */
-const sizes = {}
-sizes.width = window.innerWidth
-sizes.height = window.innerHeight
+import {PointerLockControls} from 'three/examples/jsm/controls/PointerLockControls'
 
-window.addEventListener('resize', () =>
-{
-    // Save sizes
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
+  var scene = new THREE.Scene()
+  
+  const camera=new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth/window.innerHeight,
+    0.1,
+    1000
+  )
 
-    // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+  const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 );
+	light.position.set( 0.5, 1, 0.75 );
+	scene.add( light );
 
-    // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-})
+	const controls = new PointerLockControls( camera,  document.getElementsByTagName('body')[0] );
+    controls.lock()
+  
 
-/**
- * Environnements
- */
-// Scene
-const scene = new THREE.Scene()
 
-// Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 3
-scene.add(camera)
+  camera.position.set(0,10,180)
+  const renderer=new THREE.WebGLRenderer({ alpha:true,antialias:true ,canvas:document.querySelector("canvas.webgl")})
+  renderer.setSize(window.innerWidth,window.innerHeight)
+  
+  const plane=new THREE.PlaneGeometry(2000,2000,100,100)
+  const materialPlane=new THREE.MeshBasicMaterial({side:THREE.DoubleSide,color:"red"})
+ const PlanegeoMetry=new THREE.Mesh(plane,materialPlane)
+ scene.add(PlanegeoMetry)
+ PlanegeoMetry.rotateX( - Math.PI / 2 );
 
-// Test
-const cube = new THREE.Mesh(new THREE.BoxBufferGeometry(1, 1, 1), new THREE.MeshNormalMaterial())
-scene.add(cube)
+ const box=new THREE.BoxGeometry(5,5,5)
+ const materialBox=new THREE.MeshNormalMaterial()
+const BoxgeoMetry=new THREE.Mesh(box,materialBox)
+scene.add(BoxgeoMetry)
+BoxgeoMetry.position.set(0,0,0)
 
-// Renderer
-const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector('.webgl')
-})
-renderer.setPixelRatio(window.devicePixelRatio)
-renderer.setSize(sizes.width, sizes.height)
 
-/**
- * Loop
- */
-const loop = () =>
-{
-    // Update
-    cube.rotation.y += 0.01
 
-    // Render
-    renderer.render(scene, camera)
+scene.add(controls.getObject());
 
-    // Keep looping
-    window.requestAnimationFrame(loop)
-}
-loop()
+controls.moveRight(0)
+
+  const animate = function () {
+    requestAnimationFrame( animate );
+   
+ 
+    renderer.render( scene, camera );
+  };
+
+  animate();
+

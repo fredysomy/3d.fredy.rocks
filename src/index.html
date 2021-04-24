@@ -61,7 +61,12 @@
 			</div>
 		</div>
 		<script>
-      document.body.style.margin=0;
+                document.body.style.margin=0;
+                var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+				if (isMobile) {
+					document.getElementById("instructions").style.display = "none";
+					document.getElementById("blocker").style.display = "none";
+				}
     </script>
 			
 	

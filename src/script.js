@@ -16,19 +16,36 @@ light.position.set(0.5, 1, 0.75);
 scene.add(light);
 
 const controls = new PointerLockControls(camera, document.body);
-const btn=document.getElementById("instructions")
-btn.addEventListener('click',function(){
+const blocker = document.getElementById('blocker');
+const instructions = document.getElementById('instructions');
+const btns = document.getElementById('btn');
+btns.addEventListener('click',function(){
   controls.lock()
 })
+controls.addEventListener('lock', function () {
+
+  instructions.style.display = 'none';
+  blocker.style.display = 'none';
+
+});
+
+controls.addEventListener('unlock', function () {
+
+  blocker.style.display = 'block';
+  instructions.style.display = '';
+
+});
 scene.add(controls.getObject())
 camera.position.set(0, 10, 180);
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,
-  canvas: document.querySelector("canvas.webgl"),
+ 
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 const plane = new THREE.PlaneGeometry(2000, 2000, 100, 100);
 const materialPlane = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,

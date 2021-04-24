@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<head>
+		<title>three.js - pointerlock controls</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<script src="https://kit.fontawesome.com/6c2b708adc.js" crossorigin="anonymous"></script>
+		<style>
 
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+			#blocker {
+				position: absolute;
+        margin:0px !important;
+				width: 100%;
+				height: 100%;
+				background-color:rgba(40, 160, 216, 0.6);
+			}
 
-    <title>Webpack THREE.js Template</title>
-  </head>
-  <body style="margin:0;">
- <button style="z-index:5;" id="instructions">Lock</button>
-    <canvas class="webgl"></canvas>
+			#instructions {
+				top:0;
+				width: 100%;
+				height: 100%;
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;
+
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+
+				color: #ffffff;
+				text-align: center;
+				font-family: Arial;
+				font-size: 14px;
+				line-height: 24px;
+
+				cursor: pointer;
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		
+	</head>
+	<body>  
+		
+		<div id="blocker">
     
-       
-  
-  </body>
+			<div id="instructions">
+		
+				<span style="font-size:36px">Welcome to My Virtual Portfolio.</span>
+				<br /><br />
+				Move: WASD ↑ → ↓ ← TOUCH on Arrows right bottom<br/>
+				Look: MOUSE/TOUCH</br>
+        <button id="btn">Start</button>
+			</div>
+		</div>
+		<script>
+      document.body.style.margin=0;
+    </script>
+			
+	
+	</body>
 </html>

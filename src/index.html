@@ -57,16 +57,12 @@
 				<br /><br />
 				Move: WASD ↑ → ↓ ← TOUCH on Arrows right bottom<br/>
 				Look: MOUSE/TOUCH</br>
-        <button id="btn">Start</button>
+        <button onClick="controls.lock()" id="btn">Start</button>
 			</div>
 		</div>
 		<script>
                 document.body.style.margin=0;
-                var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-				if (isMobile) {
-					document.getElementById("instructions").style.display = "none";
-					document.getElementById("blocker").style.display = "none";
-				}
+                
     </script>
 			
 	

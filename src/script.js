@@ -146,7 +146,7 @@ document.addEventListener("touchmove", function () {
 document.addEventListener("keydown", onKeyDown, false);
 document.addEventListener("keyup", onKeyUp, false);
 
-camera.position.set(0, 10, 180);
+camera.position.set(0, 7, 180);
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,
@@ -164,7 +164,7 @@ const PlanegeoMetry = new THREE.Mesh(plane, materialPlane);
 scene.add(PlanegeoMetry);
 PlanegeoMetry.rotateX(-Math.PI / 2);
 
-const box = new THREE.BoxGeometry(5, 5, 5);
+const box = new THREE.BoxGeometry(10 ,10, 10);
 const materialBox = new THREE.MeshNormalMaterial();
 const BoxgeoMetry = new THREE.Mesh(box, materialBox);
 scene.add(BoxgeoMetry);

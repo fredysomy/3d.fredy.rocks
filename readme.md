@@ -1,6 +1,6 @@
-# A 3D Remake of my portfolio taking inspiration from Bruno Simon's website.
+## A 3D Remake of my portfolio taking inspiration from Bruno Simon's website.
 
-## Setup
+### Setup
 
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:

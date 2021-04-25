@@ -119,3 +119,34 @@ body{
 	margin-top: 20px;
 	padding: 10px;
 }
+#controller-forward {
+	position: fixed;
+	bottom: 80px;
+	right: 60px;
+	font-size: 40px;
+	color: #c4c4c4;
+}
+
+#controller-right {
+	position: fixed;
+	bottom: 42px;
+	right: 20px;
+	font-size: 40px;
+	color: #c4c4c4;
+}
+
+#controller-back {
+	position: fixed;
+	right: 60px;
+	bottom: 2px;
+	font-size: 40px;
+	color: #c4c4c4;
+}
+
+#controller-left {
+	position: fixed;
+	bottom: 42px;
+	right: 100px;
+	font-size: 40px;
+	color: #c4c4c4;
+}

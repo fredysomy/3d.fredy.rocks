@@ -1,4 +1,4 @@
-# Webpack THREE.js Template
+# A 3D Remake of my portfolio taking inspiration from Bruno Simon's website.
 
 ## Setup
 

@@ -16,31 +16,31 @@ light.position.set(0.5, 1, 0.75);
 scene.add(light);
 
 const controls = new PointerLockControls(camera, document.body);
-const blocker = document.getElementById('blocker');
-const instructions = document.getElementById('instructions');
-const btns = document.getElementById('btn');
-btns.addEventListener('click',function(){
-  controls.lock()
-})
-controls.addEventListener('lock', function () {
-
-  instructions.style.display = 'none';
-  blocker.style.display = 'none';
-
+const blocker = document.getElementById("blocker");
+const instructions = document.getElementById("instructions");
+const btnn = document.getElementById("btn");
+btnn.addEventListener("click", function () {
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    document.getElementById("instructions").style.display = "none";
+    document.getElementById("blocker").style.display = "none";
+  }
+  controls.lock();
+});
+controls.addEventListener("lock", function () {
+  instructions.style.display = "none";
+  blocker.style.display = "none";
 });
 
-controls.addEventListener('unlock', function () {
-
-  blocker.style.display = 'block';
-  instructions.style.display = '';
-
+controls.addEventListener("unlock", function () {
+  blocker.style.display = "block";
+  instructions.style.display = "";
 });
-scene.add(controls.getObject())
+scene.add(controls.getObject());
 camera.position.set(0, 10, 180);
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,
- 
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);

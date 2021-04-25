@@ -1,77 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>three.js - pointerlock controls</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<script src="https://kit.fontawesome.com/6c2b708adc.js" crossorigin="anonymous"></script>
-		<style>
+  <head>
+    <title>three.js - pointerlock controls</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+    <script
+      src="https://kit.fontawesome.com/6c2b708adc.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      #blocker {
+        position: absolute;
+        margin: 0px !important;
+        width: 100%;
+        height: 100%;
 
-			#blocker {
-				position: absolute;
-        margin:0px !important;
-				width: 100%;
-				height: 100%;
-				background-color:rgba(40, 160, 216, 0.6);
-			}
+        background: #085078; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #085078, #85d8ce);
+        background: linear-gradient(to left, #085078, #85d8ce);
+      }
 
-			#instructions {
-				top:0;
-				width: 100%;
-				height: 100%;
-				display: -webkit-box;
-				display: -moz-box;
-				display: box;
+      #instructions {
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
 
-				-webkit-box-orient: horizontal;
-				-moz-box-orient: horizontal;
-				box-orient: horizontal;
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        box-orient: horizontal;
 
-				-webkit-box-pack: center;
-				-moz-box-pack: center;
-				box-pack: center;
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        box-pack: center;
 
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				box-align: center;
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        box-align: center;
 
-				color: #ffffff;
-				text-align: center;
-				font-family: Arial;
-				font-size: 14px;
-				line-height: 24px;
+        color: #ffffff;
+        text-align: center;
+        font-family: Arial;
+        font-size: 14px;
+        line-height: 24px;
 
-				cursor: pointer;
-			}
-		</style>
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-		
-	</head>
-	<body style="overscroll-behavior-y: contain;">  
-		
-		<div id="blocker">
-    
-			<div id="instructions">
-		
-				<span style="font-size:36px">Welcome to My Virtual Portfolio.</span>
-				<br /><br />
-				Move: WASD ↑ → ↓ ← TOUCH on Arrows right bottom<br/>
-				Look: MOUSE/TOUCH</br>
-        <button onClick="controls.lock()" id="btn">Start</button>
-			</div>
-			
-		</div>
-		<div align="center" style="position:absolute;z-index:4;display:flex;flex-direction: row;bottom:0;margin: left 100px;;">
-			<p id="controller-forward"><i class="fal fa-arrow-circle-up"></i></p>
-				<p id="controller-right"><i class="fal fa-arrow-circle-right"></i></p>
-				<p id="controller-back" ><i class="fal fa-arrow-circle-down"></i></p>
-				<p id="controller-left"><i class="fal fa-arrow-circle-left"></i></p>
-			</div>
-		<script>
-                document.body.style.margin=0;
-                
+        cursor: pointer;
+      }
+    </style>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body style="overscroll-behavior-y: contain">
+    <div id="blocker">
+      <div id="instructions">
+        <span style="font-size: 36px">Welcome to My Virtual Portfolio.</span>
+        <br />
+        Move: WASD ↑ → ↓ ← TOUCH on Arrows right bottom<br />
+        Look: MOUSE/TOUCH
+        <br />
+        <button id="btn">Start</button>
+      </div>
+    </div>
+    <div align="center">
+      <div
+        style="
+          position: absolute;
+          z-index: 4;
+          display: flex;
+          flex-direction: column;
+          bottom: 0;
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          justify-content: center;
+        "
+      >
+        <div>
+          <p id="controller-forward">
+            <i style="padding: 0" class="fal fa-arrow-circle-up fa-2x"></i>
+          </p>
+        </div>
+        <div
+          style="display: flex; flex-direction: row; justify-content: center"
+        >
+          <p id="controller-left">
+            <i style="margin-left: 10px;margin-right:10px;" class="fal fa-arrow-circle-left fa-2x"></i>
+          </p>
+
+          <p id="controller-back">
+            <i style="margin-left: 10px;margin-right:10px;"  class="fal fa-arrow-circle-down fa-2x"></i>
+          </p>
+          <p id="controller-right">
+            <i style="margin-left: 10px;margin-right:10px;" class="fal fa-arrow-circle-right fa-2x"></i>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.body.style.margin = 0;
     </script>
-			
-	
-	</body>
+  </body>
 </html>

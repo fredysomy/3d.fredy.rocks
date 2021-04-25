@@ -24,7 +24,7 @@ module.exports = merge(commonConfiguration, {
       const port = server.options.port;
       const https = server.options.https ? "s" : "";
       const localIp = ip.v4.sync();
-      console.log(localIp)
+      console.log(localIp);
       const domain1 = `http${https}://${localIp}:${port}`;
       const domain2 = `http${https}://localhost:${port}`;
 

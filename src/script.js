@@ -2,7 +2,10 @@ import * as THREE from "three";
 
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
 
+import PlaneGeoMetry from './geometries/PlaneGeo';
+
 var scene = new THREE.Scene();
+
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -16,6 +19,7 @@ let moveBackward = false;
 let moveLeft = false;
 let moveRight = false;
 let canJump = false;
+
 
 let prevTime = performance.now();
 const velocity = new THREE.Vector3();
@@ -155,22 +159,9 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
 document.body.appendChild(renderer.domElement);
-const plane = new THREE.PlaneGeometry(2000, 2000, 100, 100);
-const materialPlane = new THREE.MeshBasicMaterial({
-  side: THREE.DoubleSide,
-  color: "red",
-});
-const PlanegeoMetry = new THREE.Mesh(plane, materialPlane);
-scene.add(PlanegeoMetry);
-PlanegeoMetry.rotateX(-Math.PI / 2);
 
-const box = new THREE.BoxGeometry(10 ,10, 10);
-const materialBox = new THREE.MeshNormalMaterial();
-const BoxgeoMetry = new THREE.Mesh(box, materialBox);
-scene.add(BoxgeoMetry);
-BoxgeoMetry.position.set(0, 0, 0);
-
-
+scene.add(PlaneGeoMetry())
+scene.background = new THREE.Color( "#87ceeb" );
 
 const animate = function () {
   requestAnimationFrame(animate);

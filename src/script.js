@@ -3,9 +3,9 @@ import * as THREE from "three";
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
 
 import PlaneGeoMetry from './geometries/PlaneGeo';
-
+import loadGLTF from "./loaders/loader"
 var scene = new THREE.Scene();
-
+var GLTF=loadGLTF()
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -160,9 +160,9 @@ renderer.setPixelRatio(window.devicePixelRatio);
 
 document.body.appendChild(renderer.domElement);
 
-scene.add(PlaneGeoMetry())
+scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color( "#87ceeb" );
-
+scene.add(new THREE.Object3D(GLTF.arch))
 const animate = function () {
   requestAnimationFrame(animate);
 

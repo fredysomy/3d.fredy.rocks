@@ -161,7 +161,7 @@ document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb")
-scene.add(GLTF.arch)
+scene.add(new THREE.Object3D(GLTF.arch))
 const animate = function () {
   requestAnimationFrame(animate);
 

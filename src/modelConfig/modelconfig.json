@@ -1,5 +1,1 @@
-[
-    {"name":"arch","type":"gltf","path":"../models/arch.gltf"}
-]
-
-    
+[{ "name": "arch", "type": "gltf", "path": "../models/arch" }]

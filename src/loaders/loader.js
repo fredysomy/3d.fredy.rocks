@@ -1,15 +1,15 @@
-var moduleconf=require('../modelConfig/modelconfig.json')
-import * as THREE from 'three';
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+var moduleconf = require("../modelConfig/modelconfig.json");
 
-function loadGLTF(){
-    let scenes={}
-    const loader=new GLTFLoader()
-    moduleconf.forEach(element=>{
-            loader.load(element.path,function(gltf){
-                scenes.element.name=gltf.scene
-            })
-    })
-    return scenes
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+
+function loadGLTF() {
+  let scenes = {};
+  const loader = new GLTFLoader();
+  moduleconf.forEach((element) => {
+    loader.load(element.path, function (gltf) {
+      console.log(gltf);
+    });
+  });
+  return scenes;
 }
-export default loadGLTF
+export default loadGLTF;

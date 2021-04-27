@@ -160,17 +160,8 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
-scene.background = new THREE.Color("#87ceeb");
-
-const loader = new GLTFLoader();
-loader.load(
-  "models/arch/scene.gltf",
-  function (gltf) {
-    
-
-    scene.add(gltf.scene);
-  }
-);
+scene.background = new THREE.Color("#87ceeb")
+scene.add(GLTF.arch)
 const animate = function () {
   requestAnimationFrame(animate);
 

@@ -7,7 +7,7 @@ function loadGLTF() {
   const loader = new GLTFLoader();
   moduleconf.forEach((element) => {
     loader.load(element.path, function (gltf) {
-      console.log(gltf);
+      scenes[element.name]=gltf.scene
     });
   });
   return scenes;

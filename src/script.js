@@ -6,7 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import PlaneGeoMetry from "./geometries/PlaneGeo";
 import loadGLTF from "./loaders/loader";
 var scene = new THREE.Scene();
-var GLTF = loadGLTF();
+console.log(loadGLTF())
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -160,8 +160,8 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
-scene.background = new THREE.Color("#87ceeb")
-scene.add(new THREE.Object3D(GLTF.arch))
+scene.background = new THREE.Color("#87ceeb");
+
 const animate = function () {
   requestAnimationFrame(animate);
 

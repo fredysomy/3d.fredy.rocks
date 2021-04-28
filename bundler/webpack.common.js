@@ -53,6 +53,8 @@ module.exports = {
           },
         ],
       },
+
+      // Fonts
       {
         test: /\.(ttf|eot|woff|woff2)$/,
         use: [

@@ -1,24 +1,12 @@
 import * as THREE from "three";
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-function loadGLTF(path){
-  const loader=new GLTFLoader()
-  let GLTF
- loader.load(path,function(gltf){
-   GLTF=gltf.scene
- })
- return GLTF
-}
+
 
 import PlaneGeoMetry from "./geometries/PlaneGeo";
 
 var scene = new THREE.Scene();
-
-let treeModel=loadGLTF('models/arch/scene.gltf')
-console.log(treeModel)
-
-scene.add(new THREE.Object3D(treeModel))
-
+var GLTF = loadGLTF();
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -172,8 +160,8 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
-scene.background = new THREE.Color("#87ceeb");
-
+scene.background = new THREE.Color("#87ceeb")
+scene.add(new THREE.Object3D(GLTF.arch))
 const animate = function () {
   requestAnimationFrame(animate);
 

@@ -1,7 +1,15 @@
+var moduleconf = require("../modelConfig/modelconfig.json");
+
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-function loadGLTF(path){
-  return new Promise(resolve=>{
-    new GLTFLoader().load(path, resolve);
-  })
+
+function loadGLTF() {
+  let scenes = {};
+  const loader = new GLTFLoader();
+  moduleconf.forEach((element) => {
+    loader.load(element.path, function (gltf) {
+      scenes[element.name]=gltf.scene
+    });
+  });
+  return scenes;
 }
 export default loadGLTF

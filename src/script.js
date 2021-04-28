@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-
+import loadGLTF from './loaders/loader'
 import PlaneGeoMetry from "./geometries/PlaneGeo";
 
 var scene = new THREE.Scene();

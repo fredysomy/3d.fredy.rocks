@@ -1,4 +1,0 @@
-{
-  "arch": { "type": "gltf", "path": "models/arch/scene.gltf" },
-  "tree": { "type": "gltf", "path": "models/tree/scene.gltf" }
-}

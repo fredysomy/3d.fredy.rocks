@@ -53,9 +53,6 @@ module.exports = {
           },
         ],
       },
-      //models
-
-      // Fonts
       {
         test: /\.(ttf|eot|woff|woff2)$/,
         use: [

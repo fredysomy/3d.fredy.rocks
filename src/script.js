@@ -1,13 +1,17 @@
 import * as THREE from "three";
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-
-import loadGLTF from './loaders/loader'
+import loadGLTF from "./loaders/loader";
 import PlaneGeoMetry from "./geometries/PlaneGeo";
-
+import WallGeoMetry from './geometries/WallGeo';
+const WG=require('./coordinates/walls.json');
 var scene = new THREE.Scene();
-var modeltree=loadGLTF()
 
+//loadGLTF('models/tree/scene.gltf').then(data=>{scene.add(data.scene.children[0])})
+loadGLTF("models/arch1/scene.gltf").then((data) => {
+  data.scene.scale.set(0.2,0.2,0.2)
+  data.scene.position.set(-109,-4,95)
+  scene.add(data.scene);
+});
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -28,6 +32,9 @@ const direction = new THREE.Vector3();
 const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
 light.position.set(0.5, 1, 0.75);
 scene.add(light);
+
+const lightArch = new THREE.AmbientLight('#ffffff', 1.5);
+scene.add(lightArch);
 
 const controls = new PointerLockControls(camera, document.body);
 const blocker = document.getElementById("blocker");
@@ -51,7 +58,7 @@ controls.addEventListener("unlock", function () {
   instructions.style.display = "";
 });
 scene.add(controls.getObject());
-
+var coordinates=[]
 const onKeyDown = function (event) {
   switch (event.keyCode) {
     case 38:
@@ -67,6 +74,7 @@ const onKeyDown = function (event) {
     case 40:
     case 83:
       moveBackward = true;
+      coordinates.push({x:camera.position.x,y:camera.position.y,z:camera.position.z})
       break;
 
     case 39:
@@ -76,6 +84,7 @@ const onKeyDown = function (event) {
 
     case 32:
       if (canJump === true) velocity.y += 350;
+     console.log(coordinates)
       canJump = false;
       break;
   }
@@ -160,8 +169,17 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
-scene.background = new THREE.Color("#87ceeb")
-scene.add(new THREE.Object3D(modeltree.arch))
+scene.background = new THREE.Color("#87ceeb");
+let Wall
+WG.forEach((cord)=>{
+  Wall=WallGeoMetry()
+  Wall.position.x=cord.x
+  Wall.position.y=cord.y
+  Wall.position.z=cord.z
+  scene.add(Wall)
+  
+})
+
 
 const animate = function () {
   requestAnimationFrame(animate);

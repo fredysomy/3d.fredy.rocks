@@ -1,16 +1,28 @@
 import * as THREE from "three";
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
+
+//loadGLTF is a function that is used to load the model 
 import loadGLTF from "./loaders/loader";
+
+//PlaneGeoMetry,WallGeoMetry is the geometry for the landscape including the texture
 import PlaneGeoMetry from "./geometries/PlaneGeo";
-import WallGeoMetry from './geometries/WallGeo';
-const WG=require('./coordinates/walls.json');
+import WallGeoMetry from "./geometries/WallGeo";
+
+//WG is a set of Vector3 geometries to load the walls
+const WG = require("./coordinates/walls.json");
+
+
+
 var scene = new THREE.Scene();
 
-//loadGLTF('models/tree/scene.gltf').then(data=>{scene.add(data.scene.children[0])})
-loadGLTF("models/arch1/scene.gltf").then((data) => {
-  data.scene.scale.set(0.2,0.2,0.2)
-  data.scene.position.set(-109,-4,95)
-  scene.add(data.scene);
+loadGLTF("models/tree/scene.gltf").then((TREE) => {
+  TREE.scene.position.set(35,0,65)
+  scene.add(TREE.scene);
+});
+loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
+  ARCH.scene.scale.set(0.2, 0.2, 0.2);
+  ARCH.scene.position.set(-109, -4, 95);
+  scene.add(ARCH.scene);
 });
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -33,7 +45,7 @@ const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
 light.position.set(0.5, 1, 0.75);
 scene.add(light);
 
-const lightArch = new THREE.AmbientLight('#ffffff', 1.5);
+const lightArch = new THREE.AmbientLight("#ffffff", 1.5);
 scene.add(lightArch);
 
 const controls = new PointerLockControls(camera, document.body);
@@ -58,7 +70,7 @@ controls.addEventListener("unlock", function () {
   instructions.style.display = "";
 });
 scene.add(controls.getObject());
-var coordinates=[]
+var coordinates = [];
 const onKeyDown = function (event) {
   switch (event.keyCode) {
     case 38:
@@ -74,7 +86,11 @@ const onKeyDown = function (event) {
     case 40:
     case 83:
       moveBackward = true;
-      coordinates.push({x:camera.position.x,y:camera.position.y,z:camera.position.z})
+      coordinates.push({
+        x: camera.position.x,
+        y: camera.position.y,
+        z: camera.position.z,
+      });
       break;
 
     case 39:
@@ -84,7 +100,7 @@ const onKeyDown = function (event) {
 
     case 32:
       if (canJump === true) velocity.y += 350;
-     console.log(coordinates)
+      console.log(coordinates);
       canJump = false;
       break;
   }
@@ -170,16 +186,16 @@ document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb");
-let Wall
-WG.forEach((cord)=>{
-  Wall=WallGeoMetry()
-  Wall.position.x=cord.x
-  Wall.position.y=cord.y
-  Wall.position.z=cord.z
-  scene.add(Wall)
-  
-})
 
+//Bellow set of fuction load the wall geometries into the specified locations
+let Wall;
+WG.forEach((cord) => {
+  Wall = WallGeoMetry();
+  Wall.position.x = cord.x;
+  Wall.position.y = cord.y;
+  Wall.position.z = cord.z;
+  scene.add(Wall);
+});
 
 const animate = function () {
   requestAnimationFrame(animate);

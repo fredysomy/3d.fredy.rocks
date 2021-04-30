@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { PointerLockControls } from "./scripts/PointerLockMobile.js";
 
-//loadGLTF is a function that is used to load the model 
+//loadGLTF is a function that is used to load the model
 import loadGLTF from "./loaders/loader";
 
 //PlaneGeoMetry,WallGeoMetry is the geometry for the landscape including the texture
@@ -11,19 +11,23 @@ import WallGeoMetry from "./geometries/WallGeo";
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
 
-
-
 var scene = new THREE.Scene();
 
-loadGLTF("models/tree/scene.gltf").then((TREE) => {
-  TREE.scene.position.set(35,0,65)
+let TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
+  TREE.scene.position.set(35, 0, 65);
   scene.add(TREE.scene);
 });
-loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
+let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   ARCH.scene.scale.set(0.2, 0.2, 0.2);
   ARCH.scene.position.set(-109, -4, 95);
   scene.add(ARCH.scene);
 });
+
+Promise.all([TP, AP]).then(() => {
+  document.getElementById("btn").innerHTML = "Start";
+  document.getElementById("btn").disabled = false;
+});
+
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,

@@ -7,6 +7,7 @@
       name="viewport"
       content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
+
     <script
       src="https://kit.fontawesome.com/6c2b708adc.js"
       crossorigin="anonymous"
@@ -51,6 +52,34 @@
 
         cursor: pointer;
       }
+
+      .btn-outline:hover,
+      .btn-outline:active,
+      .btn-outline:focus,
+      .btn-outline.active {
+        background: #4fbfa8;
+        color: #ffffff;
+        border-color: #4fbfa8;
+      }
+
+      .btn-colour-1 {
+        color: #fff;
+        background-color: #004e64;
+        border-color: #004e64;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+        border-radius: 0;
+      }
+
+      .btn-colour-1:hover,
+      .btn-colour-1:active,
+      .btn-colour-1:focus,
+      .btn-colour-1.active {
+        /* let's darken #004E64 a bit for hover effect */
+        background: #003d4f;
+        color: #ffffff;
+        border-color: #003d4f;
+      }
     </style>
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -61,19 +90,36 @@
   <body style="overscroll-behavior-y: contain">
     <div id="blocker">
       <div id="instructions">
-        <span style="font-size: 36px">Welcome to My Virtual Portfolio.</span>
+        <span style="font-size: 36px"
+          >Welcome to My Virtual Portfolio.
+          <br />
+          <p style="font-size: 17px">
+            Move: WASD ↑ → ↓ ← TOUCH on Arrows right bottom<br />
+            Look: MOUSE/TOUCH
+          </p>
+        </span>
         <br />
-        Move: WASD ↑ → ↓ ← TOUCH on Arrows right bottom<br />
-        Look: MOUSE/TOUCH
-        <br />
-        <button id="btn">Start</button>
+        <button
+          style="
+            color: #fff;
+            background-color: #004e64;
+            border-color: #004e64;
+            font-weight: bold;
+            font-size: 18px;
+            letter-spacing: 0.05em;
+            border-radius: 0;
+          "
+          id="btn"
+        >
+          Loading..
+        </button>
       </div>
     </div>
     <div align="center">
       <div
         style="
           position: absolute;
-          z-index: 4;
+          z-index: 2;
           display: flex;
           flex-direction: column;
           bottom: 0;

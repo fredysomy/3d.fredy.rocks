@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import GroundT from "../textures/ground.jpg";
+import GroundT from "../textures/WallTexture.jpg";
 function WallGeoMetry() {
   const groundTexture = new THREE.TextureLoader().load(GroundT);
   const wall = new THREE.PlaneGeometry(19, 20, 1, 1);

@@ -11,6 +11,8 @@ import WallGeoMetry from "./geometries/WallGeo";
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
 
+import TextGeo from "./geometries/TextGeo";
+
 var scene = new THREE.Scene();
 
 let TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
@@ -190,7 +192,10 @@ document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb");
+let nameG = new THREE.Object3D(TextGeo("Fredy Somy"));
 
+nameG.position.set(5, 10, 100);
+scene.add(nameG);
 //Bellow set of fuction load the wall geometries into the specified locations
 let Wall;
 WG.forEach((cord) => {

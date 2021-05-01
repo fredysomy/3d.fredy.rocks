@@ -1,9 +1,12 @@
 import * as THREE from "three";
-function TextGeo(text) {
+const font1=require('../fonts/popins.json')
+function TextGeo() {
+	var text
+	const material = new THREE.MeshNormalMaterial();
 	const fontLoader = new THREE.FontLoader();
-	fontLoader.load('../fonts/popins.json', (font) => {
-		const textGeometry = new THREE.TextBufferGeometry(
-			text,
+	fontLoader.load(font1, (font) => {
+		const textGeometry = new THREE.TextGeometry(
+			"Fredy Somy",
 			{
 				font,
 				size: 0.5,
@@ -16,7 +19,7 @@ function TextGeo(text) {
 				bevelSegments: 12
 			}
 		)
-		const text = new THREE.Mesh(
+		text = new THREE.Mesh(
 			textGeometry,
 			material
 		);

@@ -192,7 +192,7 @@ document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb");
-let nameG = new THREE.Object3D(TextGeo())
+let nameG=TextGeo()
 scene.add(nameG);
 //Bellow set of fuction load the wall geometries into the specified locations
 let Wall;

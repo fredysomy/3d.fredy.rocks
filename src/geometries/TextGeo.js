@@ -1,14 +1,12 @@
 import * as THREE from "three";
-const font1=require('../fonts/popins.json')
+
 function TextGeo() {
-	var mesh
-	var material
-	var geometry
+  let mesh
 	var loader = new THREE.FontLoader();
-    loader.load( font1, function ( font ) {
-      geometry = new THREE.TextBufferGeometry( 'Hello three.js!', {
+    loader.load( "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.json", function ( font ) {
+       let geometry = new THREE.TextBufferGeometry( 'FREDY SOMY', {
         font: font,
-        size: 1,
+        size: 10,
         height: 0.5,
         curveSegments: 4,
         bevelEnabled: true,
@@ -17,10 +15,10 @@ function TextGeo() {
         bevelSegments: 3
       } );
     
-      material = new THREE.MeshNormalMaterial();
-     
+     let material = new THREE.MeshNormalMaterial();
+    mesh = new THREE.Mesh( geometry, material );
 	})
-	mesh = new THREE.Mesh( geometry, material );
-	return mesh
+  return mesh
+
 }
 export default TextGeo

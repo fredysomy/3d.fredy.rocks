@@ -11,7 +11,7 @@ import WallGeoMetry from "./geometries/WallGeo";
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
 
-import TextGeo from "./geometries/TextGeo";
+//import TextGeo from "./geometries/TextGeo";
 
 var scene = new THREE.Scene();
 
@@ -29,6 +29,29 @@ Promise.all([TP, AP]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
 });
+
+
+
+	var loader = new THREE.FontLoader();
+    loader.load( "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.json", function ( font ) {
+       let geometry = new THREE.TextBufferGeometry( 'WELCOME', {
+        font: font,
+        size: 7,
+        height: 5,
+        curveSegments: 4,
+        bevelEnabled: true,
+        bevelThickness: 0.02,
+        bevelSize: 0.05,
+        bevelSegments: 3
+      } );
+    
+     let material = new THREE.MeshNormalMaterial();
+    let mesh = new THREE.Mesh( geometry, material );
+    mesh.position.set(-45,0,110)
+      scene.add(mesh)
+	})
+
+
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -192,8 +215,7 @@ document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb");
-let nameG=TextGeo()
-scene.add(nameG);
+
 //Bellow set of fuction load the wall geometries into the specified locations
 let Wall;
 WG.forEach((cord) => {

@@ -24,8 +24,20 @@ let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   ARCH.scene.position.set(-109, -4, 95);
   scene.add(ARCH.scene);
 });
-
-Promise.all([TP, AP]).then(() => {
+let CP
+for(let i=1;i<30;i++){
+CP=loadGLTF("models/cloud/scene.gltf").then((CLOUD)=>{
+  
+  CLOUD.scene.position.set(
+    (Math.random()-i)*100,
+    130,
+    (Math.random()-i*2)*50,
+  )
+  scene.add(CLOUD.scene)
+  
+})
+}
+Promise.all([TP, AP,CP]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
 });
@@ -36,7 +48,7 @@ Promise.all([TP, AP]).then(() => {
     loader.load( "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.json", function ( font ) {
        let geometry = new THREE.TextBufferGeometry( 'WELCOME', {
         font: font,
-        size: 7,
+        size: 6,
         height: 5,
         curveSegments: 4,
         bevelEnabled: true,
@@ -47,7 +59,7 @@ Promise.all([TP, AP]).then(() => {
     
      let material = new THREE.MeshNormalMaterial();
     let mesh = new THREE.Mesh( geometry, material );
-    mesh.position.set(-45,0,110)
+    mesh.position.set(-23,40,105)
       scene.add(mesh)
 	})
 

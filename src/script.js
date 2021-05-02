@@ -10,6 +10,7 @@ import WallGeoMetry from "./geometries/WallGeo";
 
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
+const CC=require('./coordinates/clouds.json');
 
 //import TextGeo from "./geometries/TextGeo";
 
@@ -25,18 +26,19 @@ let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   scene.add(ARCH.scene);
 });
 let CP
-for(let i=1;i<30;i++){
+let Clord
+CC.forEach((Clcord)=>{
 CP=loadGLTF("models/cloud/scene.gltf").then((CLOUD)=>{
   
   CLOUD.scene.position.set(
-    (Math.random()-i)*100,
+    Clcord.x,
     130,
-    (Math.random()-i*2)*50,
+    Clcord.z,
   )
   scene.add(CLOUD.scene)
   
 })
-}
+})
 Promise.all([TP, AP,CP]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
@@ -45,7 +47,7 @@ Promise.all([TP, AP,CP]).then(() => {
 
 
 	var loader = new THREE.FontLoader();
-    loader.load( "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/fonts/helvetiker_regular.typeface.json", function ( font ) {
+    loader.load( "https://raw.githubusercontent.com/fredysomy/3d.fredy.rocks/master/src/fonts/popins.typeface.json", function ( font ) {
        let geometry = new THREE.TextBufferGeometry( 'WELCOME', {
         font: font,
         size: 6,
@@ -59,7 +61,7 @@ Promise.all([TP, AP,CP]).then(() => {
     
      let material = new THREE.MeshNormalMaterial();
     let mesh = new THREE.Mesh( geometry, material );
-    mesh.position.set(-23,40,105)
+    mesh.position.set(-20,42,105)
       scene.add(mesh)
 	})
 

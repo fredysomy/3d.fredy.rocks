@@ -20,6 +20,8 @@ let TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
   TREE.scene.position.set(35, 0, 65);
   scene.add(TREE.scene);
 });
+
+
 let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   ARCH.scene.scale.set(0.2, 0.2, 0.2);
   ARCH.scene.position.set(-109, -4, 95);
@@ -80,12 +82,16 @@ let moveLeft = false;
 let moveRight = false;
 let canJump = false;
 
+const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+scene.add( directionalLight );
+
+
 let prevTime = performance.now();
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 
 const light = new THREE.HemisphereLight(0xeeeeff, 0x777788, 0.75);
-light.position.set(0.5, 1, 0.75);
+light.position.set(0.5, 50, 0.75);
 scene.add(light);
 
 const lightArch = new THREE.AmbientLight("#ffffff", 1.5);

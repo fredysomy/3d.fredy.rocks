@@ -209,7 +209,7 @@ document.addEventListener("touchmove", function () {
 document.addEventListener("keydown", onKeyDown, false);
 document.addEventListener("keyup", onKeyUp, false);
 
-camera.position.set(2, 7, 180);
+camera.position.set(2, 7, 186);
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,

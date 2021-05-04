@@ -10,64 +10,51 @@ import WallGeoMetry from "./geometries/WallGeo";
 
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
-const CC=require('./coordinates/clouds.json');
+const CC = require("./coordinates/clouds.json");
+const FC = require("./coordinates/fence.json");
 
 //import TextGeo from "./geometries/TextGeo";
 
 var scene = new THREE.Scene();
 
 let TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
-  TREE.scene.position.set(35, 0, 65);
+  TREE.scene.position.set(-32.83961711702804, 0, 120.59922314835234);
   scene.add(TREE.scene);
 });
-
 
 let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   ARCH.scene.scale.set(0.2, 0.2, 0.2);
   ARCH.scene.position.set(-109, -4, 95);
   scene.add(ARCH.scene);
 });
-let CP
-let Clord
-CC.forEach((Clcord)=>{
-CP=loadGLTF("models/cloud/scene.gltf").then((CLOUD)=>{
-  
-  CLOUD.scene.position.set(
-    Clcord.x,
-    130,
-    Clcord.z,
-  )
-  scene.add(CLOUD.scene)
-  
-})
-})
-Promise.all([TP, AP,CP]).then(() => {
+let CP;
+let Clord;
+CC.forEach((Clcord) => {
+  CP = loadGLTF("models/cloud/scene.gltf").then((CLOUD) => {
+    CLOUD.scene.position.set(Clcord.x, 130, Clcord.z);
+    scene.add(CLOUD.scene);
+  });
+});
+let FP;
+FC.forEach((Fcord) => {
+  FP = loadGLTF("models/fence/scene.gltf").then((FENCE) => {
+    FENCE.scene.position.set(Fcord.x, 0, Fcord.z);
+    FENCE.scene.rotation.y = -0.35;
+    FENCE.scene.scale.set(5, 5, 5);
+    scene.add(FENCE.scene);
+  });
+});
+
+let WP = loadGLTF("models/placard/scene.gltf").then((WELCOME) => {
+  WELCOME.scene.position.set(-13.305393606028625, 0, 155.05760276520206);
+  WELCOME.scene.scale.set(2.7, 2.7, 2.7);
+  scene.add(WELCOME.scene);
+});
+
+Promise.all([TP, AP, CP, FP, WP]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
 });
-
-
-
-	var loader = new THREE.FontLoader();
-    loader.load( "https://raw.githubusercontent.com/fredysomy/3d.fredy.rocks/master/src/fonts/popins.typeface.json", function ( font ) {
-       let geometry = new THREE.TextBufferGeometry( 'WELCOME', {
-        font: font,
-        size: 6,
-        height: 5,
-        curveSegments: 4,
-        bevelEnabled: true,
-        bevelThickness: 0.02,
-        bevelSize: 0.05,
-        bevelSegments: 3
-      } );
-    
-     let material = new THREE.MeshNormalMaterial();
-    let mesh = new THREE.Mesh( geometry, material );
-    mesh.position.set(-20,42,105)
-      scene.add(mesh)
-	})
-
-
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -82,9 +69,8 @@ let moveLeft = false;
 let moveRight = false;
 let canJump = false;
 
-const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-scene.add( directionalLight );
-
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+scene.add(directionalLight);
 
 let prevTime = performance.now();
 const velocity = new THREE.Vector3();
@@ -223,7 +209,7 @@ document.addEventListener("touchmove", function () {
 document.addEventListener("keydown", onKeyDown, false);
 document.addEventListener("keyup", onKeyUp, false);
 
-camera.position.set(0, 7, 180);
+camera.position.set(2, 7, 180);
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,

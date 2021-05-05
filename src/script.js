@@ -7,6 +7,7 @@ import loadGLTF from "./loaders/loader";
 //PlaneGeoMetry,WallGeoMetry is the geometry for the landscape including the texture
 import PlaneGeoMetry from "./geometries/PlaneGeo";
 import WallGeoMetry from "./geometries/WallGeo";
+import { CullFaceBack } from "three/build/three.module";
 
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
@@ -16,7 +17,7 @@ const FC = require("./coordinates/fence.json");
 //import TextGeo from "./geometries/TextGeo";
 
 var scene = new THREE.Scene();
-
+let obj=[]
 let TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
   TREE.scene.position.set(-32.83961711702804, 0, 120.59922314835234);
   scene.add(TREE.scene);
@@ -51,7 +52,14 @@ let WP = loadGLTF("models/placard/scene.gltf").then((WELCOME) => {
   scene.add(WELCOME.scene);
 });
 
-Promise.all([TP, AP, CP, FP, WP]).then(() => {
+let THP=loadGLTF("models/treehouse/scene.gltf").then((TREEHOUSE)=>{
+  TREEHOUSE.scene.position.set(20,10,108)
+  TREEHOUSE.scene.scale.set(0.09,0.09,0.09)
+  scene.add(TREEHOUSE.scene)
+  obj.push(TREEHOUSE.scene)
+})
+
+Promise.all([TP, AP, CP, FP, WP,THP]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
 });
@@ -68,6 +76,7 @@ let moveBackward = false;
 let moveLeft = false;
 let moveRight = false;
 let canJump = false;
+let raycaster;
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 scene.add(directionalLight);
@@ -105,6 +114,9 @@ controls.addEventListener("unlock", function () {
   instructions.style.display = "";
 });
 scene.add(controls.getObject());
+
+raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+
 var coordinates = [];
 const onKeyDown = function (event) {
   switch (event.keyCode) {
@@ -135,7 +147,7 @@ const onKeyDown = function (event) {
 
     case 32:
       if (canJump === true) velocity.y += 350;
-      console.log(coordinates);
+      
       canJump = false;
       break;
   }
@@ -222,6 +234,12 @@ document.body.appendChild(renderer.domElement);
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb");
 
+const geometry = new THREE.BoxGeometry( 20, 20, 20 );
+const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+const cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+obj.push(cube)
+
 //Bellow set of fuction load the wall geometries into the specified locations
 let Wall;
 WG.forEach((cord) => {
@@ -237,32 +255,53 @@ const animate = function () {
 
   const time = performance.now();
 
-  const delta = (time - prevTime) / 1000;
+  
+  raycaster.ray.origin.copy( controls.getObject().position );
+  raycaster.ray.origin.y -= 10;
+
+  const intersections = raycaster.intersectObjects( obj);
+
+  const onObject = intersections.length > 0;
+
+  const delta = ( time - prevTime ) / 1000;
 
   velocity.x -= velocity.x * 10.0 * delta;
-  velocity.z -= velocity.z * 8.0 * delta;
-  velocity.y -= 0 * delta;
-  direction.z = Number(moveForward);
-  direction.x = Number(moveRight) - Number(moveLeft);
-  direction.normalize();
+  velocity.z -= velocity.z * 10.0 * delta;
 
-  if (moveForward) velocity.z -= direction.z * 400.0 * delta;
-  if (moveBackward) velocity.z += 400.0 * delta;
-  if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
+  velocity.y -= 9.8 * 150.0 * delta; // 100.0 = mass
 
-  controls.moveRight(-velocity.x * delta);
-  controls.moveForward(-velocity.z * delta);
+  direction.z = Number( moveForward ) - Number( moveBackward );
+  direction.x = Number( moveRight ) - Number( moveLeft );
+  direction.normalize(); // this ensures consistent movements in all directions
 
-  controls.getObject().position.y += velocity.y * delta;
-  if (controls.getObject().position.y < 10) {
+  if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
+  if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+
+  if ( onObject === true ) {
+
+    velocity.y = Math.max( 0, velocity.y );
+    canJump = true;
+
+  }
+
+  controls.moveRight( - velocity.x * delta );
+  controls.moveForward( - velocity.z * delta );
+
+  controls.getObject().position.y += ( velocity.y * delta ); // new behavior
+
+  if ( controls.getObject().position.y < 10 ) {
+
     velocity.y = 0;
     controls.getObject().position.y = 10;
+
     canJump = true;
   }
+  
 
   prevTime = time;
 
   renderer.render(scene, camera);
-};
 
-animate();
+}
+
+animate()

@@ -53,8 +53,8 @@ let WP = loadGLTF("models/placard/scene.gltf").then((WELCOME) => {
 });
 
 let THP=loadGLTF("models/treehouse/scene.gltf").then((TREEHOUSE)=>{
-  TREEHOUSE.scene.position.set(20,10,108)
-  TREEHOUSE.scene.scale.set(0.09,0.09,0.09)
+  TREEHOUSE.scene.position.set(20,10,120)
+  TREEHOUSE.scene.scale.set(2,2,2)
   scene.add(TREEHOUSE.scene)
   obj.push(TREEHOUSE.scene)
 })

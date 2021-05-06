@@ -7,29 +7,30 @@ import loadGLTF from "./loaders/loader";
 //PlaneGeoMetry,WallGeoMetry is the geometry for the landscape including the texture
 import PlaneGeoMetry from "./geometries/PlaneGeo";
 import WallGeoMetry from "./geometries/WallGeo";
-import { CullFaceBack } from "three/build/three.module";
 
 //WG is a set of Vector3 geometries to load the walls
 const WG = require("./coordinates/walls.json");
 const CC = require("./coordinates/clouds.json");
 const FC = require("./coordinates/fence.json");
-
+const TC = require("./coordinates/trees1.json");
 //import TextGeo from "./geometries/TextGeo";
 
 var scene = new THREE.Scene();
-let obj=[]
-let TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
-  TREE.scene.position.set(-32.83961711702804, 0, 120.59922314835234);
-  scene.add(TREE.scene);
+let obj = [];
+let TP;
+TC.forEach((TRCord) => {
+  TP = loadGLTF("models/tree/scene.gltf").then((TREE) => {
+    TREE.scene.position.set(TRCord.x, 0, TRCord.z);
+    scene.add(TREE.scene);
+  });
 });
-
 let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   ARCH.scene.scale.set(0.2, 0.2, 0.2);
   ARCH.scene.position.set(-109, -4, 95);
   scene.add(ARCH.scene);
 });
 let CP;
-let Clord;
+
 CC.forEach((Clcord) => {
   CP = loadGLTF("models/cloud/scene.gltf").then((CLOUD) => {
     CLOUD.scene.position.set(Clcord.x, 130, Clcord.z);
@@ -52,14 +53,15 @@ let WP = loadGLTF("models/placard/scene.gltf").then((WELCOME) => {
   scene.add(WELCOME.scene);
 });
 
-let THP=loadGLTF("models/treehouse/scene.gltf").then((TREEHOUSE)=>{
-  TREEHOUSE.scene.position.set(22,0,123)
-  TREEHOUSE.scene.scale.set(7,7,7)
-  scene.add(TREEHOUSE.scene)
-  obj.push(TREEHOUSE.scene)
-})
+let THP = loadGLTF("models/house1/house1.gltf").then((TREEHOUSE) => {
+  TREEHOUSE.scene.position.set(35, -1, 137);
+  TREEHOUSE.scene.scale.set(2, 2, 2);
+  TREEHOUSE.scene.rotation.y = -Math.PI;
+  scene.add(TREEHOUSE.scene);
+  obj.push(TREEHOUSE.scene);
+});
 
-Promise.all([TP, AP, CP, FP, WP,THP]).then(() => {
+Promise.all([TP, AP, CP, FP, WP, THP]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
 });
@@ -115,7 +117,12 @@ controls.addEventListener("unlock", function () {
 });
 scene.add(controls.getObject());
 
-raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+raycaster = new THREE.Raycaster(
+  new THREE.Vector3(),
+  new THREE.Vector3(0, -1, 0),
+  0,
+  10
+);
 
 var coordinates = [];
 const onKeyDown = function (event) {
@@ -147,8 +154,9 @@ const onKeyDown = function (event) {
 
     case 32:
       if (canJump === true) velocity.y += 350;
-      
+
       canJump = false;
+      console.log(coordinates);
       break;
   }
 };
@@ -220,8 +228,13 @@ document.addEventListener("touchmove", function () {
 });
 document.addEventListener("keydown", onKeyDown, false);
 document.addEventListener("keyup", onKeyUp, false);
+if (isMobile) {
+  camera.position.set(2,7,206);
+}
+else{
+  camera.position.set(2, 7, 180);
+}
 
-camera.position.set(2, 7, 206);
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true,
@@ -233,12 +246,6 @@ document.body.appendChild(renderer.domElement);
 
 scene.add(PlaneGeoMetry());
 scene.background = new THREE.Color("#87ceeb");
-
-const geometry = new THREE.BoxGeometry( 20, 20, 20 );
-const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-const cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
-obj.push(cube)
 
 //Bellow set of fuction load the wall geometries into the specified locations
 let Wall;
@@ -255,53 +262,47 @@ const animate = function () {
 
   const time = performance.now();
 
-  
-  raycaster.ray.origin.copy( controls.getObject().position );
+  raycaster.ray.origin.copy(controls.getObject().position);
   raycaster.ray.origin.y -= 10;
 
-  const intersections = raycaster.intersectObjects( obj);
+  const intersections = raycaster.intersectObjects(obj, true);
 
   const onObject = intersections.length > 0;
 
-  const delta = ( time - prevTime ) / 1000;
+  const delta = (time - prevTime) / 1000;
 
   velocity.x -= velocity.x * 10.0 * delta;
   velocity.z -= velocity.z * 10.0 * delta;
 
   velocity.y -= 9.8 * 150.0 * delta; // 100.0 = mass
 
-  direction.z = Number( moveForward ) - Number( moveBackward );
-  direction.x = Number( moveRight ) - Number( moveLeft );
+  direction.z = Number(moveForward) - Number(moveBackward);
+  direction.x = Number(moveRight) - Number(moveLeft);
   direction.normalize(); // this ensures consistent movements in all directions
 
-  if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-  if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+  if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+  if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
 
-  if ( onObject === true ) {
-
-    velocity.y = Math.max( 0, velocity.y );
+  if (onObject === true) {
+    velocity.y = Math.max(0, velocity.y);
     canJump = true;
-
   }
 
-  controls.moveRight( - velocity.x * delta );
-  controls.moveForward( - velocity.z * delta );
+  controls.moveRight(-velocity.x * delta);
+  controls.moveForward(-velocity.z * delta);
 
-  controls.getObject().position.y += ( velocity.y * delta ); // new behavior
+  controls.getObject().position.y += velocity.y * delta; // new behavior
 
-  if ( controls.getObject().position.y < 10 ) {
-
+  if (controls.getObject().position.y < 10) {
     velocity.y = 0;
     controls.getObject().position.y = 10;
 
     canJump = true;
   }
-  
 
   prevTime = time;
 
   renderer.render(scene, camera);
+};
 
-}
-
-animate()
+animate();

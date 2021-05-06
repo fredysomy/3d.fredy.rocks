@@ -229,11 +229,10 @@ document.addEventListener("touchmove", function () {
 document.addEventListener("keydown", onKeyDown, false);
 document.addEventListener("keyup", onKeyUp, false);
 if (isMobile) {
-  camera.position.set(2,7,206);
-}
-else{
+  camera.position.set(2,7,206)}
+
   camera.position.set(2, 7, 180);
-}
+
 
 const renderer = new THREE.WebGLRenderer({
   alpha: true,

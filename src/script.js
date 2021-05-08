@@ -30,7 +30,14 @@ let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
   scene.add(ARCH.scene);
 });
 let CP;
-
+let T1P;
+TC.forEach((TR1Cord) => {
+  T1P = loadGLTF("models/tree1/scene.gltf").then((TREE1) => {
+    TREE1.scene.scale.set(0.09,0.09,0.09)
+    TREE1.scene.position.set(TR1Cord.x, 0, TR1Cord.z);
+    scene.add(TREE1.scene);
+  });
+});
 CC.forEach((Clcord) => {
   CP = loadGLTF("models/cloud/scene.gltf").then((CLOUD) => {
     CLOUD.scene.position.set(Clcord.x, 130, Clcord.z);
@@ -61,7 +68,7 @@ let THP = loadGLTF("models/house1/house1.gltf").then((TREEHOUSE) => {
   obj.push(TREEHOUSE.scene);
 });
 
-Promise.all([TP, AP, CP, FP, WP, THP]).then(() => {
+Promise.all([TP, AP, CP, FP, WP, THP,T1P]).then(() => {
   document.getElementById("btn").innerHTML = "Start";
   document.getElementById("btn").disabled = false;
 });

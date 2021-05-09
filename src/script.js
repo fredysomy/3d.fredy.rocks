@@ -13,6 +13,7 @@ const WG = require("./coordinates/walls.json");
 const CC = require("./coordinates/clouds.json");
 const FC = require("./coordinates/fence.json");
 const TC = require("./coordinates/trees1.json");
+const T1C= require("./coordinates/tree2.json")
 //import TextGeo from "./geometries/TextGeo";
 
 var scene = new THREE.Scene();
@@ -31,9 +32,9 @@ let AP = loadGLTF("models/arch1/scene.gltf").then((ARCH) => {
 });
 let CP;
 let T1P;
-TC.forEach((TR1Cord) => {
+T1C.forEach((TR1Cord) => {
   T1P = loadGLTF("models/tree1/scene.gltf").then((TREE1) => {
-    TREE1.scene.scale.set(0.09,0.09,0.09)
+    TREE1.scene.scale.set(0.09,0.1,0.09)
     TREE1.scene.position.set(TR1Cord.x, 0, TR1Cord.z);
     scene.add(TREE1.scene);
   });
